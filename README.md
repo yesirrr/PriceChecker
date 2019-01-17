@@ -19,3 +19,5 @@ It returns an embed with:
 Uses an unofficial Search API that StockX uses to display search results. Same as GOAT. StockX gives more product information though.
 
 You'll need your own discord bot token if you want to test it out.
+
+![image](https://user-images.githubusercontent.com/30479452/51295027-abaca600-19e3-11e9-8b1b-4697e666926a.png)
