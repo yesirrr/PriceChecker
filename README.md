@@ -1,8 +1,8 @@
 # Stockx-Discord-Bot
 
-Stockx Discord Tool that shows product information based on command input.
+Stockx Discord Bot that shows product information based on user keywords.
 
-Command: .sx [keywords here] (no brackets)
+Command: sx
 
 It returns an embed with:
 - Product Name and StockX link
@@ -11,13 +11,17 @@ It returns an embed with:
 - Colorway
 - Retail Price
 - Release Date (yyyy-mm-dd)
-- Highest Bid
-- Lowest Ask
-- Sales in the last 72 hrs
+- Highest Bid and corresponding size
+- Lowest Ask and corresponding size
+- Total Asks
+- Total Bids
 - Total Pairs Sold
+- Sales in the last 72 hrs
 
-Uses an unofficial Search API that StockX uses to display search results. Same as GOAT. StockX gives more product information though.
+Uses StockX search API to use user keywords to find the product url. Url is then used in the official API which has more data about the product.
 
-You'll need your own discord bot token if you want to test it out.
+I recommend using this only for a personal/small server. I don't know if it can handle a very large server.
+Make sure to edit sx.py with your discord bot token and command prefix.
 
-![image](https://user-images.githubusercontent.com/30479452/51295027-abaca600-19e3-11e9-8b1b-4697e666926a.png)
+![image](https://user-images.githubusercontent.com/30479452/51453205-1a537180-1d0c-11e9-9904-8eaf6cd61dcb.png)
+![image](https://user-images.githubusercontent.com/30479452/51453228-2fc89b80-1d0c-11e9-9bec-bb72d7e1193b.png)
