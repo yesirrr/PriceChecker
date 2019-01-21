@@ -40,7 +40,7 @@ async def sx(ctx, *args):
     general = prices['Product']
     market = prices['Product']['market']
     sizes = prices['Product']['children']
-    
+   
     bidasks = ''
     for size in sizes:
         bidasks +=f"Size {sizes[size]['shoeSize']} | Low Ask ${sizes[size]['market']['lowestAsk']} | High Bid ${sizes[size]['market']['highestBid']}\n"
