@@ -17,6 +17,7 @@ It returns an embed with:
 - Total Bids
 - Total Pairs Sold
 - Sales in the last 72 hrs
+- Lowest Ask and Highest Bid for every size
 
 Uses StockX search API to use user keywords to find the product url. Url is then used in the official API which has more data about the product.
 
