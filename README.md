@@ -21,7 +21,7 @@ Commands:
 - Sales in the last 72 hrs
 - Lowest Ask and Highest Bid for every size
 
-Uses StockX search API to use user keywords to find the product url. Url is then used in the official API which has more data about the product.
+Uses Algolia Search API to use user keywords to find the product url. Url is then used in StockX's API which has more data about the product.
 
 .portfolio returns an embed with:
 - Username's Portfolio
