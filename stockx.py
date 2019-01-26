@@ -4,7 +4,9 @@ import json
 import requests
 
 token = 'YOUR TOKEN HERE'
-client = commands.Bot(command_prefix = 'YOUR PREFIX HERE')
+# Change the prefix if you want
+client = commands.Bot(command_prefix = '.')
+client.remove_command('help')
 
 @client.event
 async def on_ready():
@@ -76,5 +78,40 @@ async def sx(ctx, *args):
     embed.add_field(name='Sizes:', value=bidasks, inline=False)
     await client.say(embed=embed)
 
+@client.command(pass_context=True)
+async def portfolio(ctx, *args):
+    author = ctx.message.author
+    login = {
+        'email': args[0],
+        'password': args[1]
+    }
+    try:
+        await client.delete_message(ctx.message)
+    except:
+        pass
+    with requests.Session() as session:
+        user = session.post('https://stockx.com/api/login', data=login, verify=False)
+        userinfo = user.json()['Customer']
+        portgeneral = f"https://stockx.com/api/customers/{userinfo['id']}/collection/stats?currency=USD"
+        general = session.get(portgeneral, verify=False).json()
+        portfolio = f"https://stockx.com/api/customers/{userinfo['id']}/collection?limit=54"
+        port = session.get(portfolio, verify=False).json()
+        portformat = ''
+        for item in port['PortfolioItems']:
+            try:
+                portformat += f"{item['product']['shoeSize']} {item['product']['title']}\n"
+            except:
+                try:
+                    portformat += f"{item['product']['title']}\n"
+                except:
+                    pass
+
+    embed = discord.Embed(title= f"{userinfo['username']}'s' Portfolio", color=0x13e79e)
+    embed.set_footer(text='made by @kxvxnc#6989')
+    embed.add_field(name='Total Items:', value=general['Statistics']['Summary']['sneakers'], inline=True)
+    embed.add_field(name='Total Market Value:', value=f"${general['Statistics']['Summary']['marketValue']}")
+    embed.add_field(name='Items:', value=portformat, inline=False)
+    await client.send_message(author, embed=embed)
+    
 if __name__ == "__main__":
     client.run(token)
