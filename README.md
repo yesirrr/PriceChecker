@@ -1,40 +1,43 @@
 # Stockx-Discord-Bot
+This project is a discord bot that uses the Algolia search API to search products and uses that information in StockX's API to return data on a particular sneaker or piece of clothing.
 
-Stockx Discord Bot that shows product information based on user keywords.
+# Motivation
+The goal was to create something that people in the sneaker community would be able to use in their discord groups for free. Being able to visualize all the data on a sneaker at once without having to click and scroll is convenient and saves people time.
 
-Commands: 
-- .sx [keywords]
-- .portfolio [email] [password]
+# Features
+Takes in keywords from the user and displays a list of 10 possible products
+- User can choose the desired product by reacting to the bot's message
+  - If only 1 result is found, the user does not have to select an option
 
-.sx returns an embed with:
-- Product Name and StockX link
+It returns an embed with:
+- Product Name w/ StockX hyperlink
 - Thumbnail Picture
-- SKU/PID
+- SKU
 - Colorway
 - Retail Price
 - Release Date (yyyy-mm-dd)
-- Highest Bid and corresponding size
-- Lowest Ask and corresponding size
+- Highest Bid
+- Lowest Ask
 - Total Asks
 - Total Bids
-- Total Pairs Sold
+- Total Sold
 - Sales in the last 72 hrs
-- Lowest Ask and Highest Bid for every size
+- Table of lowest Ask and highest Bid for every size
 
-Uses Algolia Search API to use user keywords to find the product url. Url is then used in StockX's API which has more data about the product.
+# Bot Commands
+- .sx [keywords here]
 
-.portfolio returns an embed with:
-- Username's Portfolio
-- Total Items
-- Total market value
-- List of your portfolio
+# Screenshots
+![Errors](https://github.com/kxvxnc/images/blob/master/stockxerrors.PNG)
+![Multiple Selection](https://github.com/kxvxnc/images/blob/master/stockxmulti.PNG)
+![Single Selection](https://github.com/kxvxnc/images/blob/master/stockxsingle.PNG)
 
-Due to discord's character limits, I had to sacrifice extra information for the ability to show more items in the portfolio.
-This command will message the author only. If you accidently send the command in a public channel, the bot will delete it and send the embed to your dm's.
-
-I recommend using this only for a personal/small server. I don't know if it can handle a very large server.
-Make sure to edit stockx.py with your discord bot token and command prefix.
-
-![image](https://user-images.githubusercontent.com/30479452/51453205-1a537180-1d0c-11e9-9904-8eaf6cd61dcb.png)
-![image](https://user-images.githubusercontent.com/30479452/51453228-2fc89b80-1d0c-11e9-9bec-bb72d7e1193b.png)
-![image](https://user-images.githubusercontent.com/30479452/51791573-35423d80-2173-11e9-9e53-77870f7193a9.png)
+# Installation
+- Install python 3+ and add python to your PATH
+- Install pip `python get-pip.py`
+- Clone this repository `git clone https://github.com/kxvxnc/StockX-Discord-Bot.git`
+- Change directories to the current folder `cd /to/your/directory/StockX-Discord-Bot`
+- Install dependencies `pip install -r requirements.txt`
+- Create an application at the [Discord Developer Portal](https://discord.com/developers/applications)
+- Edit line 8 in main.py with your own bot token and save
+- Run main.py `python main.py`
