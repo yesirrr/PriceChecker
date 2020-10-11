@@ -8,7 +8,7 @@ import requests
 import asyncio
 
 token = "NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI"
-client = commands.Bot(command_prefix="!")
+client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
 
@@ -71,7 +71,7 @@ async def lookup_stockx(selection, keywords, ctx):
     await ctx.send(embed=embed)
 
 
-def lookup_goat(selection, keywords, ctx):
+async def lookup_goat(selection, keywords, ctx):
     json_string = json.dumps({"params": f"query={keywords}&hitsPerPage=20&facets=*"})
     byte_payload = bytes(json_string, "utf-8")
     algolia = {
@@ -141,7 +141,7 @@ async def logout(ctx):
 
 
 @client.command(pass_context=True)
-async def pcs(ctx, *args):
+async def s(ctx, *args):
     keywords = ""
     for word in args:
         keywords += word + "%20"
@@ -169,7 +169,7 @@ async def pcs(ctx, *args):
 
 
 @client.command(pass_context=True)
-async def pcg(ctx, *args):
+async def g(ctx, *args):
     keywords = ""
     for word in args:
         keywords += word + "%20"
