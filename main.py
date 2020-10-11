@@ -123,7 +123,7 @@ async def lookup_goat(selection, keywords, ctx):
 
     embed = discord.Embed(
         title=f"{general['name']}",
-        url=f"https://www.goat.com/sneakers/{general['slug']}'",
+        url=f"https://www.goat.com/sneakers/{general['slug']}",
         color=0x099F5F,
     )
     embed.set_thumbnail(url=general["gridPictureUrl"])
