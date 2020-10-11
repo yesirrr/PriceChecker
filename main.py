@@ -13,6 +13,13 @@ selected = 0
 numResults = 0
 
 
+@client.event
+async def on_ready():
+    await client.change_presence(
+        activity=discord.Activity(type=discord.ActivityType.listening, name=".s and .g")
+    )
+
+
 async def lookup_stockx(selection, keywords, ctx):
     json_string = json.dumps({"params": f"query={keywords}&hitsPerPage=20&facets=*"})
     byte_payload = bytes(json_string, "utf-8")
