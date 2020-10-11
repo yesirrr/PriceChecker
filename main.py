@@ -101,7 +101,4 @@ async def pc(ctx, *args):
         await ctx.send("No products found. Please try again.")
 
 
-# .portfolio command removed due to login requiring javascript
-
-if __name__ == "__main__":
-    client.run(token)
+client.run(token)
