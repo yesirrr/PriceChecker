@@ -7,7 +7,9 @@ import json
 import requests
 import asyncio
 
-token = "NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI"
+# NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI
+# actual bot token ^^
+token = "NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.jLHF-As5TRaNSV0p2ujq0xMbAMg"
 client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
@@ -75,6 +77,10 @@ async def lookup_stockx(selection, keywords, ctx):
             value=f"Lowest Ask: ${sizes[size]['market']['lowestAsk']}\nHighest Bid: ${sizes[size]['market']['highestBid']}",
             inline=True,
         )
+    embed.set_footer(
+        text="StockX",
+        icon_url="https://cdn.discordapp.com/attachments/734938642790744097/771078700178866226/stockx.png",
+    )
     await ctx.send(embed=embed)
 
 
@@ -131,14 +137,26 @@ async def lookup_goat(selection, keywords, ctx):
         embed.add_field(name="SKU:", value=general["sku"], inline=True)
     else:
         embed.add_field(name="SKU:", value="N/A", inline=True)
+    if "localizedSpecialDisplayPriceCents" in general:
+        embed.add_field(
+            name="Retail Price:",
+            value=f"${int(general['localizedSpecialDisplayPriceCents']['amountUsdCents'] / 100)}",
+            inline=True,
+        )
+    else:
+        embed.add_field(name="Retail Price:", value="N/A")
     embed.add_field(name="‎⠀", value="⠀", inline=False)
     for size in sizes:
         lowestPrice = int(size["lowestPriceCents"]["amountUsdCents"] / 100)
         embed.add_field(
             name=size["size"],
-            value=f"Lowest Ask: ${lowestPrice}",
+            value=f"${lowestPrice}",
             inline=True,
         )
+    embed.set_footer(
+        text="Goat",
+        icon_url="https://cdn.discordapp.com/attachments/734938642790744097/771077292881477632/goat.png",
+    )
     await ctx.send(embed=embed)
 
 
