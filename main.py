@@ -9,7 +9,8 @@ import asyncio
 
 # NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI
 # actual bot token ^^
-token = "NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.jLHF-As5TRaNSV0p2ujq0xMbAMg"
+# test bot token: NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.jLHF-As5TRaNSV0p2ujq0xMbAMg
+token = "NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI"
 client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
