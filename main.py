@@ -10,7 +10,7 @@ import asyncio
 # NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI
 # actual bot token ^^
 # test bot token: NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.jLHF-As5TRaNSV0p2ujq0xMbAMg
-token = "NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI"
+token = "NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.jLHF-As5TRaNSV0p2ujq0xMbAMg"
 client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
@@ -178,6 +178,9 @@ async def s(ctx, *args):
         "x-algolia-application-id": "XW7SBCT9V6",
         "x-algolia-api-key": "6bfb5abee4dcd8cea8f0ca1ca085c2b3",
     }
+    # used to get items using algolia api and get result
+    # stockx changed something so now they use a different method
+    # check website to see what requests are made when searching for product
     with requests.Session() as session:
         r = session.post(
             "https://xw7sbct9v6-dsn.algolia.net/1/indexes/products/query",
