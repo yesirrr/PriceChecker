@@ -23,13 +23,13 @@ async def on_ready():
     )
 
 
-async def lookup_stockx(selection, keywords, ctx):
+async def lookup_stockx(keywords, ctx):
     json_string = json.dumps({"params": f"query={keywords}&hitsPerPage=20&facets=*"})
     byte_payload = bytes(json_string, "utf-8")
     algolia = {
-        "x-algolia-agent": "Algolia for vanilla JavaScript 3.32.0",
+        "x-algolia-agent": "Algolia for JavaScript (4.8.4); Browser",
         "x-algolia-application-id": "XW7SBCT9V6",
-        "x-algolia-api-key": "6bfb5abee4dcd8cea8f0ca1ca085c2b3",
+        "x-algolia-api-key": "6b5e76b49705eb9f51a06d3c82f7acee",
     }
     header = {
         "accept": "*/*",
@@ -47,7 +47,7 @@ async def lookup_stockx(selection, keywords, ctx):
             data=byte_payload,
             timeout=30,
         )
-        results = r.json()["hits"][selection]
+        results = r.json()["hits"][0]
         apiurl = f"https://stockx.com/api/products/{results['url']}?includes=market,360&currency=USD"
 
     response = requests.get(apiurl, verify=False, headers=header)
@@ -170,17 +170,15 @@ async def logout(ctx):
 async def s(ctx, *args):
     keywords = ""
     for word in args:
-        keywords += word + "%20"
+        keywords += word + " "
+    keywords.rstrip()
     json_string = json.dumps({"params": f"query={keywords}&hitsPerPage=20&facets=*"})
     byte_payload = bytes(json_string, "utf-8")
     params = {
-        "x-algolia-agent": "Algolia for vanilla JavaScript 3.32.0",
+        "x-algolia-agent": "Algolia for JavaScript (4.8.4); Browser",
         "x-algolia-application-id": "XW7SBCT9V6",
-        "x-algolia-api-key": "6bfb5abee4dcd8cea8f0ca1ca085c2b3",
+        "x-algolia-api-key": "6b5e76b49705eb9f51a06d3c82f7acee",
     }
-    # used to get items using algolia api and get result
-    # stockx changed something so now they use a different method
-    # check website to see what requests are made when searching for product
     with requests.Session() as session:
         r = session.post(
             "https://xw7sbct9v6-dsn.algolia.net/1/indexes/products/query",
@@ -189,10 +187,13 @@ async def s(ctx, *args):
             data=byte_payload,
             timeout=30,
         )
+        # * print the results to a json file to make it easier to read
+        # with open("data.json", "w", encoding="utf-8") as f:
+        #     json.dump(r.json()["hits"][0], f, ensure_ascii=False, indent=4)
         numResults = len(r.json()["hits"])
 
     if numResults != 0:
-        await lookup_stockx(0, keywords, ctx)
+        await lookup_stockx(keywords, ctx)
     else:
         await ctx.send("No products found. Please try again.")
 
