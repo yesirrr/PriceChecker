@@ -9,7 +9,7 @@ import asyncio
 
 # actual bot token: NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI
 # test bot token: NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.jLHF-As5TRaNSV0p2ujq0xMbAMg
-token = "NzY0NTIyMzk2OTUzNjA4MjAz.X4He9w.FgfgSSIgmk2zbhsYExcIMxjDzCI"
+token = "NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.jLHF-As5TRaNSV0p2ujq0xMbAMg"
 client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
@@ -223,6 +223,20 @@ async def g(ctx, *args):
         await lookup_goat(0, keywords, ctx)
     else:
         await ctx.send("No products found. Please try again.")
+
+
+@client.command(pass_context=True)
+async def ys(ctx, *args):
+    if len(args) == 1:
+        url = (
+            "https://www.yeezysupply.com/hpl/content/availability-v2/yeezy-supply/US/"
+            + args[0]
+            + ".json"
+        )
+        r = requests.get(url)
+        print(r.json())
+    else:
+        await ctx.send("Incorrect usage. Input SKU only.")
 
 
 client.run(token)
