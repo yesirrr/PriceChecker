@@ -42,6 +42,7 @@ async def lookup_stockx(keywords, ctx):
             data=byte_payload,
             timeout=30,
         )
+        print(r)
         results = r.json()["hits"][0]
         apiurl = f"https://stockx.com/api/products/{results['url']}?includes=market,360&currency=USD"
 
