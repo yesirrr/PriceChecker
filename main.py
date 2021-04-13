@@ -5,7 +5,7 @@ import requests
 import asyncio
 import os
 
-token = os.environ.get("TOKEN")
+token = "NzcxMDY0MTU2ODQwMzk0NzYy.X5mrdA.-Htof-ZHRDcXENkcO4dtJSrnOKw"
 client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
@@ -17,22 +17,13 @@ async def on_ready():
         activity=discord.Activity(type=discord.ActivityType.listening, name=".s and .g")
     )
 
-
-async def lookup_stockx(keywords, ctx):
+def get_stockx_stock(keywords):
     json_string = json.dumps({"params": f"query={keywords}&hitsPerPage=20&facets=*"})
     byte_payload = bytes(json_string, "utf-8")
     algolia = {
-        "x-algolia-agent": "Algolia for JavaScript (4.8.4); Browser",
+        "x-algolia-agent": "Algolia for JavaScript (4.8.6); Browser",
         "x-algolia-application-id": "XW7SBCT9V6",
-        "x-algolia-api-key": "6b5e76b49705eb9f51a06d3c82f7acee",
-    }
-    header = {
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "en-US,en;q=0.9,ja-JP;q=0.8,ja;q=0.7,la;q=0.6",
-        "appos": "web",
-        "appversion": "0.1",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
+        "x-algolia-api-key": "M2E1YzUwMThiNWJmNWUzNmM5MDRmOTQ0NmY3MDZiOWI4YTUwZGRlMDA1ZjY3N2M4ZGU0ZGQxOGY5ZGI5MTlhN3ZhbGlkVW50aWw9MTYxODM0NTQ5Nw==",
     }
     with requests.Session() as session:
         r = session.post(
@@ -42,14 +33,25 @@ async def lookup_stockx(keywords, ctx):
             data=byte_payload,
             timeout=30,
         )
-        print(r)
-        results = r.json()["hits"][0]
-        apiurl = f"https://stockx.com/api/products/{results['url']}?includes=market,360&currency=USD"
+        return r
 
-    response = requests.get(apiurl, verify=False, headers=header)
-    prices = response.json()
+
+async def lookup_stockx(keywords, ctx):
+    results = get_stockx_stock(keywords).json()["hits"][0]
+    apiurl = f"https://stockx.com/api/products/{results['url']}?includes=market,360&currency=USD&country=US"
+
+    header = {
+        "accept": "*/*",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-US,en;q=0.9,lt;q=0.8",
+        "appos": "web",
+        "appversion": "0.1",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
+    }
+    prices = requests.get(apiurl, verify=False, headers=header).json()
     general = prices["Product"]
     sizes = prices["Product"]["children"]
+    print(sizes)
 
     embed = discord.Embed(
         title=f"{general['title']}",
@@ -168,22 +170,7 @@ async def s(ctx, *args):
     for word in args:
         keywords += word + " "
     keywords.rstrip()
-    json_string = json.dumps({"params": f"query={keywords}&hitsPerPage=20&facets=*"})
-    byte_payload = bytes(json_string, "utf-8")
-    params = {
-        "x-algolia-agent": "Algolia for JavaScript (4.8.4); Browser",
-        "x-algolia-application-id": "XW7SBCT9V6",
-        "x-algolia-api-key": "6b5e76b49705eb9f51a06d3c82f7acee",
-    }
-    with requests.Session() as session:
-        r = session.post(
-            "https://xw7sbct9v6-dsn.algolia.net/1/indexes/products/query",
-            params=params,
-            verify=False,
-            data=byte_payload,
-            timeout=30,
-        )
-        numResults = len(r.json()["hits"])
+    numResults = len(get_stockx_stock(keywords).json()["hits"])
 
     if numResults != 0:
         await lookup_stockx(keywords, ctx)
