@@ -5,7 +5,7 @@ import requests
 import asyncio
 import os
 
-token = "NzY1MjUzNzkwMDM0Mjk2ODgy.X4SIIQ.asIFqnKA5ylzpFPf4lDZLEwzmHc"
+token = "YOUR TOKEN HERE"
 client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
