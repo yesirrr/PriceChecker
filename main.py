@@ -5,7 +5,7 @@ import requests
 import asyncio
 import os
 
-token = os.environ.get("TOKEN")
+token = "NzY1MjUzNzkwMDM0Mjk2ODgy.X4SIIQ.asIFqnKA5ylzpFPf4lDZLEwzmHc"
 client = commands.Bot(command_prefix=".")
 selected = 0
 numResults = 0
@@ -27,12 +27,19 @@ async def lookup_stockx(keywords, ctx):
         "x-algolia-api-key": "6b5e76b49705eb9f51a06d3c82f7acee",
     }
     header = {
-        "accept": "*/*",
-        "accept-encoding": "gzip, deflate, br",
-        "accept-language": "en-US,en;q=0.9,ja-JP;q=0.8,ja;q=0.7,la;q=0.6",
-        "appos": "web",
-        "appversion": "0.1",
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
+    'authority': 'stockx.com',
+    'cache-control': 'max-age=0',
+    'sec-ch-ua': '"Google Chrome";v="89", "Chromium";v="89", ";Not A Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.114 Safari/537.36',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'sec-fetch-site': 'none',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-user': '?1',
+    'sec-fetch-dest': 'document',
+    'accept-language': 'en-US,en;q=0.9',
+    'if-none-match': 'W/"2fc70-vY91R0aLlO6Z2K01qdIx3qYBCx8"',
     }
     with requests.Session() as session:
         r = session.post(
@@ -106,7 +113,7 @@ async def lookup_goat(selection, keywords, ctx):
             timeout=30,
         )
         results = r.json()["hits"][0]
-        apiurl_prices = f"https://www.goat.com/web-api/v1/product_variants?productTemplateId={results['slug']}"
+        apiurl_prices = f"https://www.goat.com/api/v1/highest_offers?productTemplateId={results['slug']}"
         apiurl_general = (
             f"https://www.goat.com/web-api/v1/product_templates/{results['slug']}"
         )
@@ -118,11 +125,7 @@ async def lookup_goat(selection, keywords, ctx):
     general = response_general.json()
     sizes = []
     for size in prices:
-        if (
-            size["boxCondition"] == "good_condition"
-            and size["shoeCondition"] == "new_no_defects"
-        ):
-            sizes.append(size)
+       sizes.append(size)
 
     embed = discord.Embed(
         title=f"{general['name']}",
@@ -144,7 +147,7 @@ async def lookup_goat(selection, keywords, ctx):
         embed.add_field(name="Retail Price:", value="N/A")
     embed.add_field(name="‎⠀", value="⠀", inline=False)
     for size in sizes:
-        lowestPrice = int(size["lowestPriceCents"]["amountUsdCents"] / 100)
+        lowestPrice = int(size["offerAmountCents"]["amountUsdCents"] / 100)
         embed.add_field(
             name=size["size"],
             value=f"${lowestPrice}",
